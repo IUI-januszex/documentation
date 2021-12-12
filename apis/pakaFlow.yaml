@@ -1,0 +1,1154 @@
+swagger: '2.0'
+info:
+  version: '1.0'
+  title: PakaFlow API Documentation
+host: localhost:8081
+basePath: /api
+tags:
+  - name: courier-controller
+    description: Courier Controller
+  - name: parcel-controller
+    description: Parcel Controller
+  - name: parcel-operation-controller
+    description: Parcel Operation Controller
+  - name: parcel-type-controller
+    description: Parcel Type Controller
+  - name: user-controller
+    description: User Controller
+  - name: warehouse-controller
+    description: Warehouse Controller
+paths:
+  /courier/{id}/parcels:
+    get:
+      tags:
+        - courier-controller
+      summary: getCouriersParcels
+      operationId: getCouriersParcelsUsingGET
+      produces:
+        - '*/*'
+      parameters:
+        - name: id
+          in: path
+          description: id
+          required: true
+          type: string
+      responses:
+        '200':
+          description: OK
+          schema:
+            $ref: '#/definitions/CourierParcelsResponse'
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '404':
+          description: Not Found
+      deprecated: false
+  /me/parcels:
+    get:
+      tags:
+        - user-controller
+      summary: getUserParels
+      operationId: getUserParelsUsingGET
+      produces:
+        - '*/*'
+      parameters: []
+      responses:
+        '200':
+          description: OK
+          schema:
+            $ref: '#/definitions/UserParcelsResponse'
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '404':
+          description: Not Found
+      deprecated: false
+  /parcel:
+    post:
+      tags:
+        - parcel-controller
+      summary: registerParcel
+      operationId: registerParcelUsingPOST
+      consumes:
+        - application/json
+      produces:
+        - '*/*'
+      parameters:
+        - in: body
+          name: request
+          description: request
+          required: true
+          schema:
+            $ref: '#/definitions/ParcelRequest'
+      responses:
+        '200':
+          description: OK
+          schema:
+            type: object
+        '201':
+          description: Created
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '404':
+          description: Not Found
+      deprecated: false
+  /parcel-type:
+    get:
+      tags:
+        - parcel-type-controller
+      summary: getAll
+      operationId: getAllUsingGET
+      produces:
+        - '*/*'
+      responses:
+        '200':
+          description: OK
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/ParcelTypeAdminResponse'
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '404':
+          description: Not Found
+      deprecated: false
+    post:
+      tags:
+        - parcel-type-controller
+      summary: add
+      operationId: addUsingPOST
+      consumes:
+        - application/json
+      produces:
+        - '*/*'
+      parameters:
+        - in: body
+          name: request
+          description: request
+          required: true
+          schema:
+            $ref: '#/definitions/ParcelTypeRequest'
+      responses:
+        '200':
+          description: OK
+          schema:
+            $ref: '#/definitions/ParcelTypeAdminResponse'
+        '201':
+          description: Created
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '404':
+          description: Not Found
+      deprecated: false
+  /parcel-type/active:
+    get:
+      tags:
+        - parcel-type-controller
+      summary: getAllActive
+      operationId: getAllActiveUsingGET
+      produces:
+        - '*/*'
+      responses:
+        '200':
+          description: OK
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/ParcelTypeResponse'
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '404':
+          description: Not Found
+      deprecated: false
+  /parcel-type/{id}:
+    get:
+      tags:
+        - parcel-type-controller
+      summary: getById
+      operationId: getByIdUsingGET_1
+      produces:
+        - '*/*'
+      parameters:
+        - name: id
+          in: path
+          description: id
+          required: true
+          type: integer
+          format: int64
+      responses:
+        '200':
+          description: OK
+          schema:
+            $ref: '#/definitions/ParcelTypeResponse'
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '404':
+          description: Not Found
+      deprecated: false
+    put:
+      tags:
+        - parcel-type-controller
+      summary: update
+      operationId: updateUsingPUT
+      consumes:
+        - application/json
+      produces:
+        - '*/*'
+      parameters:
+        - name: id
+          in: path
+          description: id
+          required: true
+          type: integer
+          format: int64
+        - in: body
+          name: request
+          description: request
+          required: true
+          schema:
+            $ref: '#/definitions/ParcelTypeRequest'
+      responses:
+        '200':
+          description: OK
+          schema:
+            type: object
+        '201':
+          description: Created
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '404':
+          description: Not Found
+      deprecated: false
+    delete:
+      tags:
+        - parcel-type-controller
+      summary: delete
+      operationId: deleteUsingDELETE
+      produces:
+        - '*/*'
+      parameters:
+        - name: id
+          in: path
+          description: id
+          required: true
+          type: integer
+          format: int64
+      responses:
+        '200':
+          description: OK
+          schema:
+            type: object
+        '204':
+          description: No Content
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+      deprecated: false
+  /parcel-type/{id}/state:
+    put:
+      tags:
+        - parcel-type-controller
+      summary: changeActiveChange
+      operationId: changeActiveChangeUsingPUT
+      consumes:
+        - application/json
+      produces:
+        - '*/*'
+      parameters:
+        - name: id
+          in: path
+          description: id
+          required: true
+          type: integer
+          format: int64
+        - in: body
+          name: request
+          description: request
+          required: true
+          schema:
+            $ref: '#/definitions/ParcelTypeChangeActivatedRequest'
+      responses:
+        '200':
+          description: OK
+          schema:
+            type: object
+        '201':
+          description: Created
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '404':
+          description: Not Found
+      deprecated: false
+  /parcel/{id}:
+    get:
+      tags:
+        - parcel-controller
+      summary: getById
+      operationId: getByIdUsingGET
+      produces:
+        - '*/*'
+      parameters:
+        - name: id
+          in: path
+          description: id
+          required: true
+          type: integer
+          format: int64
+      responses:
+        '200':
+          description: OK
+          schema:
+            $ref: '#/definitions/ParcelBriefView'
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '404':
+          description: Not Found
+      deprecated: false
+    delete:
+      tags:
+        - parcel-controller
+      summary: deleteParcel
+      operationId: deleteParcelUsingDELETE
+      produces:
+        - '*/*'
+      parameters:
+        - name: id
+          in: path
+          description: id
+          required: true
+          type: integer
+          format: int64
+      responses:
+        '200':
+          description: OK
+        '204':
+          description: No Content
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+      deprecated: false
+  /parcel/{id}/assign:
+    post:
+      tags:
+        - parcel-operation-controller
+      summary: assignToCourier
+      operationId: assignToCourierUsingPOST
+      consumes:
+        - application/json
+      produces:
+        - '*/*'
+      parameters:
+        - name: id
+          in: path
+          description: id
+          required: true
+          type: integer
+          format: int64
+        - in: body
+          name: request
+          description: request
+          required: true
+          schema:
+            $ref: '#/definitions/AssignParcelToCourierRequest'
+      responses:
+        '200':
+          description: OK
+          schema:
+            type: object
+        '201':
+          description: Created
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '404':
+          description: Not Found
+      deprecated: false
+  /parcel/{id}/deliver-to-client:
+    post:
+      tags:
+        - parcel-operation-controller
+      summary: deliverToClient
+      operationId: deliverToClientUsingPOST
+      consumes:
+        - application/json
+      produces:
+        - '*/*'
+      parameters:
+        - name: id
+          in: path
+          description: id
+          required: true
+          type: integer
+          format: int64
+      responses:
+        '200':
+          description: OK
+          schema:
+            type: object
+        '201':
+          description: Created
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '404':
+          description: Not Found
+      deprecated: false
+  /parcel/{id}/deliver-to-warehouse:
+    post:
+      tags:
+        - parcel-operation-controller
+      summary: pickUpParcel
+      operationId: pickUpParcelUsingPOST
+      consumes:
+        - application/json
+      produces:
+        - '*/*'
+      parameters:
+        - name: id
+          in: path
+          description: id
+          required: true
+          type: integer
+          format: int64
+        - in: body
+          name: request
+          description: request
+          required: true
+          schema:
+            $ref: '#/definitions/DeliverToWarehouseRequest'
+      responses:
+        '200':
+          description: OK
+          schema:
+            type: object
+        '201':
+          description: Created
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '404':
+          description: Not Found
+      deprecated: false
+  /parcel/{id}/delivery-attempt:
+    get:
+      tags:
+        - parcel-controller
+      summary: getDeliveryAttempts
+      operationId: getDeliveryAttemptsUsingGET
+      produces:
+        - '*/*'
+      parameters:
+        - name: id
+          in: path
+          description: id
+          required: true
+          type: integer
+          format: int64
+      responses:
+        '200':
+          description: OK
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/DeliveryAttemptResponse'
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '404':
+          description: Not Found
+      deprecated: false
+    post:
+      tags:
+        - parcel-operation-controller
+      summary: addDeliveryAttempt
+      operationId: addDeliveryAttemptUsingPOST
+      consumes:
+        - application/json
+      produces:
+        - '*/*'
+      parameters:
+        - name: id
+          in: path
+          description: id
+          required: true
+          type: integer
+          format: int64
+      responses:
+        '200':
+          description: OK
+          schema:
+            type: object
+        '201':
+          description: Created
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '404':
+          description: Not Found
+      deprecated: false
+  /parcel/{id}/detail:
+    get:
+      tags:
+        - parcel-controller
+      summary: getByIdWithDetails
+      operationId: getByIdWithDetailsUsingGET
+      produces:
+        - '*/*'
+      parameters:
+        - name: id
+          in: path
+          description: id
+          required: true
+          type: integer
+          format: int64
+      responses:
+        '200':
+          description: OK
+          schema:
+            $ref: '#/definitions/ParcelDetailView'
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '404':
+          description: Not Found
+      deprecated: false
+  /parcel/{id}/move-date:
+    post:
+      tags:
+        - parcel-operation-controller
+      summary: moveDate
+      operationId: moveDateUsingPOST
+      consumes:
+        - application/json
+      produces:
+        - '*/*'
+      parameters:
+        - name: id
+          in: path
+          description: id
+          required: true
+          type: integer
+          format: int64
+        - in: body
+          name: request
+          description: request
+          required: true
+          schema:
+            $ref: '#/definitions/MoveCourierArrivalDateRequest'
+      responses:
+        '200':
+          description: OK
+          schema:
+            type: object
+        '201':
+          description: Created
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '404':
+          description: Not Found
+      deprecated: false
+  /parcel/{id}/pay:
+    put:
+      tags:
+        - parcel-operation-controller
+      summary: payParcel
+      operationId: payParcelUsingPUT
+      consumes:
+        - application/json
+      produces:
+        - '*/*'
+      parameters:
+        - name: id
+          in: path
+          description: id
+          required: true
+          type: integer
+          format: int64
+        - in: body
+          name: request
+          description: request
+          required: true
+          schema:
+            $ref: '#/definitions/ParcelPaidRequest'
+      responses:
+        '200':
+          description: OK
+          schema:
+            type: object
+        '201':
+          description: Created
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '404':
+          description: Not Found
+      deprecated: false
+  /parcel/{id}/pay-fee:
+    put:
+      tags:
+        - parcel-operation-controller
+      summary: payParcelFee
+      operationId: payParcelFeeUsingPUT
+      consumes:
+        - application/json
+      produces:
+        - '*/*'
+      parameters:
+        - name: id
+          in: path
+          description: id
+          required: true
+          type: integer
+          format: int64
+        - in: body
+          name: request
+          description: request
+          required: true
+          schema:
+            $ref: '#/definitions/ParcelPaidRequest'
+      responses:
+        '200':
+          description: OK
+          schema:
+            type: object
+        '201':
+          description: Created
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '404':
+          description: Not Found
+      deprecated: false
+  /parcel/{id}/pick-up:
+    post:
+      tags:
+        - parcel-operation-controller
+      summary: pickUpParcel
+      operationId: pickUpParcelUsingPOST_1
+      consumes:
+        - application/json
+      produces:
+        - '*/*'
+      parameters:
+        - name: id
+          in: path
+          description: id
+          required: true
+          type: integer
+          format: int64
+      responses:
+        '200':
+          description: OK
+          schema:
+            type: object
+        '201':
+          description: Created
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '404':
+          description: Not Found
+      deprecated: false
+  /parcel/{id}/states:
+    get:
+      tags:
+        - parcel-controller
+      summary: getStates
+      operationId: getStatesUsingGET
+      produces:
+        - '*/*'
+      parameters:
+        - name: id
+          in: path
+          description: id
+          required: true
+          type: integer
+          format: int64
+      responses:
+        '200':
+          description: OK
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/ParcelStateResponse'
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '404':
+          description: Not Found
+      deprecated: false
+  /warehouse/global/{id}:
+    get:
+      tags:
+        - warehouse-controller
+      summary: getParcelsFromGlobal
+      operationId: getParcelsFromGlobalUsingGET
+      produces:
+        - '*/*'
+      parameters:
+        - name: id
+          in: path
+          description: id
+          required: true
+          type: integer
+          format: int64
+      responses:
+        '200':
+          description: OK
+          schema:
+            $ref: '#/definitions/WarehouseParcelsResponse'
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '404':
+          description: Not Found
+      deprecated: false
+  /warehouse/local/{id}:
+    get:
+      tags:
+        - warehouse-controller
+      summary: getParcelsFromLocal
+      operationId: getParcelsFromLocalUsingGET
+      produces:
+        - '*/*'
+      parameters:
+        - name: id
+          in: path
+          description: id
+          required: true
+          type: integer
+          format: int64
+      responses:
+        '200':
+          description: OK
+          schema:
+            $ref: '#/definitions/WarehouseParcelsResponse'
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '404':
+          description: Not Found
+      deprecated: false
+securityDefinitions:
+  JWT:
+    type: apiKey
+    name: Authorization
+    in: header
+definitions:
+  AddressDto:
+    type: object
+    properties:
+      buildingNumber:
+        type: string
+      city:
+        type: string
+      flatNumber:
+        type: string
+      postalCode:
+        type: string
+      street:
+        type: string
+    title: AddressDto
+  AddressRequest:
+    type: object
+    properties:
+      postalCode:
+        type: string
+      city:
+        type: string
+      street:
+        type: string
+      buildingNumber:
+        type: string
+      flatNumber:
+        type: string
+    title: AddressRequest
+  AssignParcelToCourierRequest:
+    type: object
+    properties:
+      courierId:
+        type: string
+    title: AssignParcelToCourierRequest
+  CourierParcelsResponse:
+    type: object
+    properties:
+      assignedParcels:
+        type: array
+        items:
+          $ref: '#/definitions/ParcelDetailView'
+      pickedUpParcels:
+        type: array
+        items:
+          $ref: '#/definitions/ParcelDetailView'
+    title: CourierParcelsResponse
+  DeliverToWarehouseRequest:
+    type: object
+    properties:
+      warehouseId:
+        type: integer
+        format: int64
+      warehouseType:
+        type: string
+        enum:
+          - LOCAL
+          - GLOBAL
+    title: DeliverToWarehouseRequest
+  DeliveryAttemptResponse:
+    type: object
+    properties:
+      dateTime:
+        type: string
+        format: date-time
+      id:
+        type: integer
+        format: int64
+      parcelId:
+        type: integer
+        format: int64
+    title: DeliveryAttemptResponse
+  ModelAndView:
+    type: object
+    properties:
+      empty:
+        type: boolean
+      model:
+        type: object
+      modelMap:
+        type: object
+        additionalProperties:
+          type: object
+      reference:
+        type: boolean
+      status:
+        type: string
+        enum:
+          - 100 CONTINUE
+          - 101 SWITCHING_PROTOCOLS
+          - 102 PROCESSING
+          - 103 CHECKPOINT
+          - 200 OK
+          - 201 CREATED
+          - 202 ACCEPTED
+          - 203 NON_AUTHORITATIVE_INFORMATION
+          - 204 NO_CONTENT
+          - 205 RESET_CONTENT
+          - 206 PARTIAL_CONTENT
+          - 207 MULTI_STATUS
+          - 208 ALREADY_REPORTED
+          - 226 IM_USED
+          - 300 MULTIPLE_CHOICES
+          - 301 MOVED_PERMANENTLY
+          - 302 FOUND
+          - 302 MOVED_TEMPORARILY
+          - 303 SEE_OTHER
+          - 304 NOT_MODIFIED
+          - 305 USE_PROXY
+          - 307 TEMPORARY_REDIRECT
+          - 308 PERMANENT_REDIRECT
+          - 400 BAD_REQUEST
+          - 401 UNAUTHORIZED
+          - 402 PAYMENT_REQUIRED
+          - 403 FORBIDDEN
+          - 404 NOT_FOUND
+          - 405 METHOD_NOT_ALLOWED
+          - 406 NOT_ACCEPTABLE
+          - 407 PROXY_AUTHENTICATION_REQUIRED
+          - 408 REQUEST_TIMEOUT
+          - 409 CONFLICT
+          - 410 GONE
+          - 411 LENGTH_REQUIRED
+          - 412 PRECONDITION_FAILED
+          - 413 PAYLOAD_TOO_LARGE
+          - 413 REQUEST_ENTITY_TOO_LARGE
+          - 414 URI_TOO_LONG
+          - 414 REQUEST_URI_TOO_LONG
+          - 415 UNSUPPORTED_MEDIA_TYPE
+          - 416 REQUESTED_RANGE_NOT_SATISFIABLE
+          - 417 EXPECTATION_FAILED
+          - 418 I_AM_A_TEAPOT
+          - 419 INSUFFICIENT_SPACE_ON_RESOURCE
+          - 420 METHOD_FAILURE
+          - 421 DESTINATION_LOCKED
+          - 422 UNPROCESSABLE_ENTITY
+          - 423 LOCKED
+          - 424 FAILED_DEPENDENCY
+          - 425 TOO_EARLY
+          - 426 UPGRADE_REQUIRED
+          - 428 PRECONDITION_REQUIRED
+          - 429 TOO_MANY_REQUESTS
+          - 431 REQUEST_HEADER_FIELDS_TOO_LARGE
+          - 451 UNAVAILABLE_FOR_LEGAL_REASONS
+          - 500 INTERNAL_SERVER_ERROR
+          - 501 NOT_IMPLEMENTED
+          - 502 BAD_GATEWAY
+          - 503 SERVICE_UNAVAILABLE
+          - 504 GATEWAY_TIMEOUT
+          - 505 HTTP_VERSION_NOT_SUPPORTED
+          - 506 VARIANT_ALSO_NEGOTIATES
+          - 507 INSUFFICIENT_STORAGE
+          - 508 LOOP_DETECTED
+          - 509 BANDWIDTH_LIMIT_EXCEEDED
+          - 510 NOT_EXTENDED
+          - 511 NETWORK_AUTHENTICATION_REQUIRED
+      view:
+        $ref: '#/definitions/View'
+      viewName:
+        type: string
+    title: ModelAndView
+  MoveCourierArrivalDateRequest:
+    type: object
+    properties:
+      newDate:
+        type: string
+        format: date
+      pin:
+        type: array
+        items:
+          type: string
+    title: MoveCourierArrivalDateRequest
+  Operation:
+    type: object
+    properties:
+      operationType:
+        type: string
+        enum:
+          - ASSIGN_TO_COURIER
+          - DELIVER_TO_CLIENT
+          - DELIVER_TO_WAREHOUSE
+          - NO_OPERATION
+          - PICKUP
+          - PAY_PARCEL
+          - PAY_FEE
+          - EDIT
+          - DELETE
+    title: Operation
+  ParcelBriefView:
+    type: object
+    properties:
+      estimatedDeliveryTime:
+        type: string
+        format: date
+      id:
+        type: integer
+        format: int64
+      isFeePaid:
+        type: boolean
+      isMoveable:
+        type: boolean
+      isParcelPaid:
+        type: boolean
+      parcelFee:
+        type: number
+      parcelPrice:
+        type: number
+      receiverInfo:
+        type: string
+      senderInfo:
+        type: string
+    title: ParcelBriefView
+  ParcelDetailView:
+    type: object
+    properties:
+      currentSate:
+        $ref: '#/definitions/ParcelStateResponse'
+      destinationAddress:
+        $ref: '#/definitions/AddressDto'
+      expectedCourierArrivalDate:
+        type: string
+        format: date
+      id:
+        type: integer
+        format: int64
+      isFeePaid:
+        type: boolean
+      isMoveable:
+        type: boolean
+      isParcelPaid:
+        type: boolean
+      operations:
+        type: array
+        items:
+          $ref: '#/definitions/Operation'
+      parcelFee:
+        type: number
+      parcelPrice:
+        type: number
+      receiverInfo:
+        type: string
+      senderInfo:
+        type: string
+      sourceAddress:
+        $ref: '#/definitions/AddressDto'
+    title: ParcelDetailView
+  ParcelPaidRequest:
+    type: object
+    properties:
+      isPaid:
+        type: boolean
+    title: ParcelPaidRequest
+  ParcelRequest:
+    type: object
+    properties:
+      deliveryAddress:
+        $ref: '#/definitions/AddressRequest'
+      parcelType:
+        type: integer
+        format: int64
+      price:
+        type: number
+      receiverDetails:
+        type: string
+      receiverEmailAddress:
+        type: string
+      receiverPhoneNumber:
+        type: string
+      senderAddress:
+        $ref: '#/definitions/AddressRequest'
+      senderDetails:
+        type: string
+      senderEmailAddress:
+        type: string
+      senderPhoneNumber:
+        type: string
+    title: ParcelRequest
+  ParcelStateResponse:
+    type: object
+    properties:
+      changeTime:
+        type: string
+        format: date-time
+      courierId:
+        type: string
+      type:
+        type: string
+        enum:
+          - AT_SENDER
+          - ASSIGNED_TO_COURIER
+          - AT_COURIER
+          - DELIVERED
+          - AT_WAREHOUSE
+          - RETURNED
+      warehouseId:
+        type: integer
+        format: int64
+      warehouseType:
+        type: string
+        enum:
+          - LOCAL
+          - GLOBAL
+    title: ParcelStateResponse
+  ParcelTypeAdminResponse:
+    type: object
+    properties:
+      description:
+        type: string
+      id:
+        type: integer
+        format: int64
+      isActive:
+        type: boolean
+      name:
+        type: string
+      parcelCount:
+        type: integer
+        format: int32
+      price:
+        type: number
+    title: ParcelTypeAdminResponse
+  ParcelTypeChangeActivatedRequest:
+    type: object
+    required:
+      - isActive
+    properties:
+      isActive:
+        type: boolean
+    title: ParcelTypeChangeActivatedRequest
+  ParcelTypeRequest:
+    type: object
+    properties:
+      name:
+        type: string
+      description:
+        type: string
+      price:
+        type: number
+    title: ParcelTypeRequest
+  ParcelTypeResponse:
+    type: object
+    properties:
+      description:
+        type: string
+      id:
+        type: integer
+        format: int64
+      isActive:
+        type: boolean
+      name:
+        type: string
+      price:
+        type: number
+    title: ParcelTypeResponse
+  UserParcelsResponse:
+    type: object
+    properties:
+      observedParcels:
+        type: array
+        items:
+          $ref: '#/definitions/ParcelBriefView'
+      sentParcels:
+        type: array
+        items:
+          $ref: '#/definitions/ParcelBriefView'
+    title: UserParcelsResponse
+  View:
+    type: object
+    properties:
+      contentType:
+        type: string
+    title: View
+  WarehouseParcelsResponse:
+    type: object
+    properties:
+      parcelsAssigned:
+        type: array
+        items:
+          $ref: '#/definitions/ParcelDetailView'
+      parcelsAteWarehouse:
+        type: array
+        items:
+          $ref: '#/definitions/ParcelDetailView'
+    title: WarehouseParcelsResponse
